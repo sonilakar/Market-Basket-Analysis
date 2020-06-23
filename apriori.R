@@ -1,0 +1,37 @@
+library(dplyr)
+library(tidyr)
+library(reshape2)
+library(arules)
+  
+retail_data <- read.csv("Online Retail.csv")
+
+retail_data_subset <- retail_data[,c(1,3)]
+
+#retail_data_subset <- retail_data_subset %>% top_n(10000)
+
+retail_data_subset <- filter(retail_data_subset, Description != "")
+
+retail_data_subset$prod_count <- 1
+
+retail_data_subset2 <- retail_data_subset %>%
+  group_by(InvoiceNo, Description) %>%
+  summarise(prod_count = sum(prod_count))
+
+data_wide <- spread(retail_data_subset2, Description, prod_count)
+
+data_wide <- data_wide[-1]
+
+data_wide[is.na(data_wide) == FALSE] <- 1
+data_wide[is.na(data_wide) == TRUE] <- 0
+
+col_names <- names(data_wide)
+data_wide[,col_names] <- lapply(data_wide[,col_names] , factor)
+
+rules <- apriori(data_wide, 
+                 parameter = list(minlen = 2,
+                 maxlen = 3,
+                 supp = 0.9))
+
+inspect(rules)
+
+
