@@ -1,8 +1,11 @@
 # Market-Basket-Analysis
 
 Market Basket Analysis helps us to answers questions such as:
+
 -Which products customers buy together
+
 -What is the probability that product A and B are purchased together
+
 -What is the strength of correlation between A & B
 
 Algorithm used for MBA: apriori
