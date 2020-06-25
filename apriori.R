@@ -70,7 +70,7 @@ grocery_rules_sorted <- sort(grocery_rules, by = "support", decreasing = T)
 inspect(grocery_rules_sorted)
 
 is.redundant(grocery_rules_sorted)
-#~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
