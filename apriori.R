@@ -2,6 +2,7 @@ library(dplyr)
 library(tidyr)
 library(reshape2)
 library(arules)
+library(arulesViz)
   
 retail_data <- read.csv("Online Retail.csv")
 
@@ -71,11 +72,14 @@ inspect(grocery_rules_sorted)
 
 is.redundant(grocery_rules_sorted)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~
+grocery_rules <- apriori(Groceries, 
+                         parameter = list(supp = 0.01, conf=0.5),
+                         appearance = list(rhs=c("whole milk"), default="lhs"))
 
 
+plot(grocery_rules, method = "graph")
 
-
-
+plot(grocery_rules, method = "graph", engine = "interactive")
 
 
 
