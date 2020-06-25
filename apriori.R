@@ -48,8 +48,43 @@ col_names <- names(retail_data)
 retail_data[,col_names] <- lapply(retail_data[,col_names] , factor)
 
 rules <- apriori(retail_data, 
-                 parameter = list(supp = 0.5),
+                 parameter = list(maxlen = 3, conf = 0.8),
                  appearance = list(rhs=c("Bread=1"), default="lhs"))
 
 inspect(rules)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#with Groceries data
+
+data(Groceries)
+
+grocery_rules <- apriori(Groceries)
+grocery_rules <- apriori(Groceries, 
+                         parameter = list(supp = 0.01, conf=0.5))
+
+inspect(grocery_rules)
+
+grocery_rules_sorted <- sort(grocery_rules, by = "support", decreasing = T)
+
+inspect(grocery_rules_sorted)
+
+is.redundant(grocery_rules_sorted)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
